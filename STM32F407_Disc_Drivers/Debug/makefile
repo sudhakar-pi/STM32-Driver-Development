@@ -34,34 +34,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := STM32_Drivers_discovery
+BUILD_ARTIFACT_NAME := STM32F407_Disc_Drivers
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX := 
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME).$(BUILD_ARTIFACT_EXTENSION)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-STM32_Drivers_discovery.elf \
+STM32F407_Disc_Drivers.elf \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-STM32_Drivers_discovery.list \
+STM32F407_Disc_Drivers.list \
 
 OBJCOPY_BIN += \
-STM32_Drivers_discovery.bin \
+STM32F407_Disc_Drivers.bin \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: STM32_Drivers_discovery.elf secondary-outputs
+main-build: STM32F407_Disc_Drivers.elf secondary-outputs
 
 # Tool invocations
-STM32_Drivers_discovery.elf: $(OBJS) $(USER_OBJS) C:\Users\sudha\Desktop\Target\GPIO_Drivers_discovery\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "STM32_Drivers_discovery.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\sudha\Desktop\Target\GPIO_Drivers_discovery\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32_Drivers_discovery.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+STM32F407_Disc_Drivers.elf: $(OBJS) $(USER_OBJS) C:\Users\sudha\Desktop\Target\GIT_Hub\STM32-Driver-Development\STM32F407_Disc_Drivers\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "STM32F407_Disc_Drivers.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\sudha\Desktop\Target\GIT_Hub\STM32-Driver-Development\STM32F407_Disc_Drivers\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="STM32F407_Disc_Drivers.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -70,13 +70,13 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-STM32_Drivers_discovery.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "STM32_Drivers_discovery.list"
+STM32F407_Disc_Drivers.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "STM32F407_Disc_Drivers.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-STM32_Drivers_discovery.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "STM32_Drivers_discovery.bin"
+STM32F407_Disc_Drivers.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "STM32F407_Disc_Drivers.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 
