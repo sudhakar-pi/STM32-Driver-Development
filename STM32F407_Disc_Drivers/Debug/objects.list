@@ -1,3 +1,4 @@
+"Drivers/src/stm32f407_gpio_drivers.o"
 "Src/main.o"
 "Src/syscalls.o"
 "Src/sysmem.o"
