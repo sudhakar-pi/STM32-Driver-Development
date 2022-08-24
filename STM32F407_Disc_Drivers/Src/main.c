@@ -19,14 +19,81 @@
 
 
 #include <stdint.h>
-#include "stm32f407.h"
+//#include "Stm32f407.h"
+#include "Stm32f407_gpio_driver.h"
 
-#if !defined(__SOFT_FP__) && defined(__ARM_FP)
-  #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
-#endif
+#define HIGH 1
+#define BTN_PRESSED HIGH
+
+void delay(void)
+{
+	for(uint32_t i = 0 ; i < 500000/2 ; i ++);
+}
+
 
 int main(void)
 {
-    /* Loop forever */
-	for(;;);
+
+	GPIO_Handle_t GpioLed, GPIOBtn;
+
+	//this is led gpio configuration
+	GpioLed.pGPIOx = GPIOD;
+	GpioLed.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
+	GpioLed.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
+	GpioLed.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	GpioLed.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
+	GpioLed.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+	GPIO_PeriClockControl(GPIOD,ENABLE);
+
+	GPIO_Init(&GpioLed);
+
+
+	//this is btn gpio configuration
+	GPIOBtn.pGPIOx = GPIOA;
+	GPIOBtn.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_0;
+	GPIOBtn.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
+	GPIOBtn.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	GPIOBtn.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+	GPIO_PeriClockControl(GPIOA,ENABLE);
+
+	GPIO_Init(&GPIOBtn);
+
+	while(1)
+	{
+		if(GPIO_ReadFromInputPin(GPIOA,GPIO_PIN_NO_0) == BTN_PRESSED)
+		{
+			delay();
+			GPIO_ToggleOutputPin(GPIOD,GPIO_PIN_NO_12);
+		}
+	}
+	return 0;
 }
+
+
+/*
+int main(void)
+{
+
+	GPIO_Handle_t GpioLed;
+
+	GpioLed.pGPIOx = GPIOD;
+	GpioLed.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
+	GpioLed.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
+	GpioLed.GPIO_PinConfig.GPIO_PinSpeed = GPIO_SPEED_FAST;
+	GpioLed.GPIO_PinConfig.GPIO_PinOPType = GPIO_OP_TYPE_PP;
+	GpioLed.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
+
+	GPIO_PeriClockControl(GPIOD,ENABLE);
+
+	GPIO_Init(&GpioLed);
+
+	while(1)
+	{
+		GPIO_ToggleOutputPin(GPIOD,GPIO_PIN_NO_12);
+		delay();
+	}
+	return 0;
+}
+*/
